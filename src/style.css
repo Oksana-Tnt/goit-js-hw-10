@@ -1,13 +1,24 @@
 body {
-  background-image: url("/imagine/vecteezy_cute-cat-kitten-greeting-cartoon-doodle-background-wallpaper_.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: aquamarine;
 }
 .container {
   display: flex;
-  align-items: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+.cat-info{
+ 
+  width: 450px;
+  font-weight: 400;
+  text-align: justify;
+
 }
 
+.breed-select {
+  margin-left: auto;
+  margin-right: auto;
+}
 .visually-hidden {
   position: absolute;
   width: 1px;

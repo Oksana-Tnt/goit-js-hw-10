@@ -1,20 +1,21 @@
 
-
-// function createSlimSelectorByBreed(arr){
-//     return arr
-//     .map(({ id, name }) => `<option value='${id}'>${name}</option>`)
-//     .join();
-// };
-
-import SlimSelect from "slim-select";
-import "slim-select/dist/slimselect.css";
+// import SlimSelect from "slim-select";
+// import "slim-select/dist/slimselect.css"
 
 function createSlimSelectorByBreed(arr){
-    return new SlimSelect({
-        select: "#slim-select",
-        data : arr.map(({id, name})=>[{text : name, value : id}])
-    })
+    return arr
+    .map(({ id, name }) => `<option value='${id}'>${name}</option>`)
+    .join();
 };
+
+// function createSlimSelectorByBreed(arr){
+    
+//     return new SlimSelect({
+//         select: "#slim-select",
+//         data : arr.map(({ id, name }) => [{ text: name, value: id }])
+//     })
+  
+// };
 
  function createMarkupCatByBreed(arr){
     return arr.map(({url, breeds:[{name, description, temperament}]})=>

@@ -2,9 +2,10 @@ import { fetchBreeds, fetchCatByBreed } from "./cat-api";
 import { createSlimSelectorByBreed, createMarkupCatByBreed } from "./templates/cat-markup";
 import SlimSelect from "slim-select";
 import "slim-select/dist/slimselect.css"
+import Notiflix from 'notiflix';
 
 const selectEl = document.querySelector(".breed-select");
-const error = document.querySelector(".error");
+const errorEl = document.querySelector(".error");
 const loader = document.querySelector(".loader");
 const info = document.querySelector(".cat-info");
     
@@ -17,10 +18,11 @@ function onLoadBreeds(){
     fetchBreeds()
         .then(data => {
             selectEl.innerHTML = createSlimSelectorByBreed(data.data);
+            createSlim();
             hidden();
-})  
+        })
   
-    .catch (err=>console.log(err))
+        .catch(catchError);
 
 };
 
@@ -32,20 +34,24 @@ function onSelectCat(evt) {
         .then(data => {
             info.innerHTML = createMarkupCatByBreed(data.data);
             hidden();
-    })       
+        })
             
                   
-        .catch(err => console.log(err))        
+        .catch(catchError);        
     
  };
 
-     function hidden(){
+    function hidden(){
     loader.classList.toggle('is-hidden')
     loader.classList.toggle('loader')
 };
  
-// function createSlim() {
-//     const slim = new SlimSelect({
-//         select: "#slim-select",
-//     });
-// };
+function createSlim() {
+    const slim = new SlimSelect({
+        select: "#slim-select",
+    });
+};
+
+function catchError() {
+  Notiflix.Report.failure(`${errorEl.textContent}`);
+}
