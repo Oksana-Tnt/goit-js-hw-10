@@ -7,34 +7,45 @@ const selectEl = document.querySelector(".breed-select");
 const error = document.querySelector(".error");
 const loader = document.querySelector(".loader");
 const info = document.querySelector(".cat-info");
-
+    
 window.addEventListener("load", onLoadBreeds);
 selectEl.addEventListener("change", onSelectCat);
 
 function onLoadBreeds(){
     info.innerHTML = '';
+    
     fetchBreeds()
-    .then (data => {selectEl.innerHTML=createSlimSelectorByBreed(data.data);
-    createSlim();
-    loader.style.display="none";
-    })
+        .then(data => {
+            selectEl.innerHTML = createSlimSelectorByBreed(data.data);
+            hidden();
+})  
+  
     .catch (err=>console.log(err))
 
 };
 
- function onSelectCat(evt){
+function onSelectCat(evt) {
     
+    info.innerHTML = "";
+    hidden();
     fetchCatByBreed(evt.target.value)
-    .then(data=>{info.innerHTML=createMarkupCatByBreed(data.data);
-         loader.style.display="none";
-        }) 
-         
-     .catch(err=>console.log(err))
-  
+        .then(data => {
+            info.innerHTML = createMarkupCatByBreed(data.data);
+            hidden();
+    })       
+            
+                  
+        .catch(err => console.log(err))        
+    
  };
 
- function createSlim(){
-    const slim= new SlimSelect({
-        select: "#slim-select",
-    });
+     function hidden(){
+    loader.classList.toggle('is-hidden')
+    loader.classList.toggle('loader')
 };
+ 
+// function createSlim() {
+//     const slim = new SlimSelect({
+//         select: "#slim-select",
+//     });
+// };
