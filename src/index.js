@@ -10,21 +10,17 @@ const loader = document.querySelector(".loader");
 const info = document.querySelector(".cat-info");
     
 window.addEventListener("load", onLoadBreeds);
-selectEl.addEventListener("change", onSelectCat);
+
 
 
 function onLoadBreeds(){
     info.innerHTML = '';
        
     fetchBreeds()
-        .then(data => {        
-                                  
-            const slim = new SlimSelect({
-                select: "#slim-select",
-                data: data.data.map(({name, id}) => ({ text: name, value : id})),
-            });                            
-                  
-             hidden();
+        .then(data => {     
+                               
+            createSlim(data.data);
+            selectEl.addEventListener("change", onSelectCat);
         })  
         .catch(catchError);
 };
@@ -41,20 +37,22 @@ function onSelectCat(evt) {
         })
                             
         .catch(catchError);      
+    };
     
- };
 
-    function hidden(){
+function hidden(){
     loader.classList.toggle('is-hidden')
     loader.classList.toggle('loader')
 };
  
-// function createSlim() {
-//     const slim = new SlimSelect({
-//         select: "#slim-select",
-//     });
-// };
-
+function createSlim(arr) {
+     new SlimSelect({
+    select: "#slim-select",
+    data: arr.map(({name, id}) => ({ text: name, value : id})),
+    });  
+};
+        
+  
 function catchError() {
     Notiflix.Report.failure(`${errorEl.textContent}`)
 }
