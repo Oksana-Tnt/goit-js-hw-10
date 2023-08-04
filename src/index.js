@@ -1,5 +1,5 @@
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
-import { createSlimSelectorByBreed, createMarkupCatByBreed } from "./templates/cat-markup";
+import { createMarkupCatByBreed } from "./templates/cat-markup";
 import SlimSelect from "slim-select";
 import "slim-select/dist/slimselect.css"
 import Notiflix from 'notiflix';
@@ -12,20 +12,24 @@ const info = document.querySelector(".cat-info");
 window.addEventListener("load", onLoadBreeds);
 selectEl.addEventListener("change", onSelectCat);
 
+
 function onLoadBreeds(){
     info.innerHTML = '';
-    
+       
     fetchBreeds()
-        .then(data => {
-            selectEl.innerHTML = createSlimSelectorByBreed(data.data);
-            createSlim();
-            hidden();
-        })
-  
+        .then(data => {        
+                                  
+            const slim = new SlimSelect({
+                select: "#slim-select",
+                data: data.data.map(({name, id}) => ({ text: name, value : id})),
+            });                            
+                  
+             hidden();
+        })  
         .catch(catchError);
-
 };
-
+  
+   
 function onSelectCat(evt) {
     
     info.innerHTML = "";
@@ -35,9 +39,8 @@ function onSelectCat(evt) {
             info.innerHTML = createMarkupCatByBreed(data.data);
             hidden();
         })
-            
-                  
-        .catch(catchError);        
+                            
+        .catch(catchError);      
     
  };
 
@@ -46,12 +49,12 @@ function onSelectCat(evt) {
     loader.classList.toggle('loader')
 };
  
-function createSlim() {
-    const slim = new SlimSelect({
-        select: "#slim-select",
-    });
-};
+// function createSlim() {
+//     const slim = new SlimSelect({
+//         select: "#slim-select",
+//     });
+// };
 
 function catchError() {
-  Notiflix.Report.failure(`${errorEl.textContent}`);
+    Notiflix.Report.failure(`${errorEl.textContent}`)
 }
